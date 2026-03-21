@@ -1,24 +1,66 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-
-<h3 class="text-warning" style="letter-spacing: 2px;">Search Term - {{ request.GET.keyword }}</h3>
-<div class="row mb-2">
-  {% if blogs %}
-  {% for i in blogs %}
-  <div class="col-md-6">
-    <div class="card border-0">
-      <div class="card-body">
-        <h3><a href="" class="text-dark">{{ i.title }}</a></h3>
-        <small class="mb-1 text-muted">{{ i.created_at | timesince }} ago | {{ i.author }}</small>
-        <p class="card-text">{{ i.short_description | truncatewords:25 }}</p>
-      </div>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <!-- Search Header -->
+            <div class="text-center mb-5">
+                <h1 class="display-5 fw-bold">
+                    <i class="fa fa-search"></i> Search Results
+                </h1>
+                <p class="lead text-muted">
+                    Showing results for: <span class="text-warning fw-bold">"{{ keyword|default:request.GET.keyword }}"</span>
+                </p>
+                <p class="text-muted">{{ blogs|length }} post{{ blogs|pluralize }} found</p>
+            </div>
+            
+            <!-- Results List -->
+            {% if blogs %}
+                {% for post in blogs %}
+                <article class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h2 class="card-title h3 mb-3">
+                            <a href="{% url 'blog_detail' post.slug %}" class="text-dark text-decoration-none">{{ post.title }}</a>
+                        </h2>
+                        
+                        <div class="text-muted mb-3">
+                            <small>
+                                <i class="fa fa-calendar"></i> {{ post.updated_at|timesince }} ago
+                                {% if post.author %}
+                                &nbsp;|&nbsp; <i class="fa fa-user"></i> {{ post.author }}
+                                {% endif %}
+                                {% if post.category %}
+                                &nbsp;|&nbsp; <i class="fa fa-folder"></i> 
+                                <a href="{% url 'posts_by_category' post.category.id %}" class="text-decoration-none">{{ post.category.category_name }}</a>
+                                {% endif %}
+                            </small>
+                        </div>
+                        
+                        {% if post.featured_image %}
+                        <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="img-fluid rounded mb-3" style="max-height: 250px; width: 100%; object-fit: cover;">
+                        {% endif %}
+                        
+                        <p class="card-text">{{ post.short_description|truncatewords:30 }}</p>
+                        
+                        <a href="{% url 'blog_detail' post.slug %}" class="btn btn-outline-warning btn-sm">
+                            Read More <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+                {% endfor %}
+            {% else %}
+                <div class="alert alert-info text-center">
+                    <i class="fa fa-search fa-3x mb-3"></i>
+                    <h4 class="alert-heading">No posts found!</h4>
+                    <p>We couldn't find any posts matching <strong>"{{ keyword|default:request.GET.keyword }}"</strong></p>
+                    <hr>
+                    <p class="mb-0">Try searching with different keywords or browse our categories.</p>
+                    <a href="{% url 'home' %}" class="btn btn-warning mt-3">Back to Home</a>
+                </div>
+            {% endif %}
+        </div>
     </div>
-  </div>
-  {% endfor %}
-  {% else %}
-  <p>No posts found</p>
-  {% endif %}
 </div>
-
 {% endblock %}
