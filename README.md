@@ -38,21 +38,22 @@
 
 ## 🖼️ Screenshots
 
-> 📸 *Add your screenshots to a `/screenshots` folder and update the paths below.*
-
 <br/>
 
 ### 🏠 Homepage
 ![Homepage](screenshots/homepage.png)
 
+### 🏠 Homepage
+![Homepage](screenshots/homepage1.png)
+
 ### 📖 Blog Detail
 ![Blog Detail](screenshots/blog_detail.png)
 
-### 🛠️ Admin Dashboard
-![Dashboard](screenshots/dashboard.png)
+### 🛠️  Dashboard
+![Dashboard](screenshots/dashboard1.png)
 
-### 📄 Post Management
-![Posts](screenshots/posts.png)
+### 📄 Post BY Category
+![Posts](screenshots/category.png)
 
 ---
 
