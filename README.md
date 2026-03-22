@@ -1,6 +1,6 @@
 <div align="center">
 
-# 📝 Django Blog
+# 🌐 Postopia
 
 **A full-featured blogging platform with a public blog, rich content management, and a protected admin dashboard.**
 
