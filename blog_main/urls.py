@@ -25,9 +25,15 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home,name="home"),
     path('category/', include('blogs.urls')),
+    path('blogs/<slug:slug>/',blog_view.blogs,name='blog_detail'),
+
+    #search endpoints
+    path('search/',blog_view.search, name='search'),
     path('register/', views.register ,name="register"),
     path('logout/', views.logout ,name="logout"),
     path('login/', views.login ,name="login"),
-    path('blogs/<slug:slug>/',blog_view.blogs,name='blog_detail'),
-    path('blogs/search',blog_view.search, name='search')
+
+    #dashboard
+    path('dashboard/',include('dashboards.urls'))
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
